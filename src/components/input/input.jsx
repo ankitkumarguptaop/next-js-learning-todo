@@ -18,8 +18,8 @@ const Input = ({
         variant="outlined"
         label={lable}
         {...register(feildName, {
-          // pattern: { value: pattern, message: `Invalid  ${feildName}` },
-          // required: { value: true, message: `${feildName} Required ` },
+          pattern: { value: pattern, message: `Invalid  ${feildName}` },
+          required: { value: true, message: `${feildName} Required ` },
         })}
         error={errors[feildName]}
         sx={{
