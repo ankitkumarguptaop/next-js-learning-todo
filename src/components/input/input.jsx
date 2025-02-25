@@ -1,28 +1,42 @@
 import { TextField } from "@mui/material";
 import React from "react";
 import style from "./input.module.css";
-const Input = ({ lable, height, width, register, feildName, setState }) => {
+
+const Input = ({
+  lable,
+  width,
+  register,
+  feildName,
+  pattern,
+  errors,
+  getValues,
+}) => {
   return (
-    <TextField
-      id="outlined-basic"
-      className={style.input}
-      variant="outlined"
-      label={lable}
-      {...register(feildName, { required: `${feildName} is required` })}
-      // value={value}
-      // error={error}
-      // onChange={setState}
-      sx={{
-        width: width,
-        input: {
-          alignContent: "center",
-          height: "37px",
-          padding: "5px",
-          color: "#808080",
-          fontWeight: "light",
-        },
-      }}
-    ></TextField>
+    <>
+      <TextField
+        className={style.input}
+        variant="outlined"
+        label={lable}
+        {...register(feildName, {
+           pattern: { value: pattern, message: `Invalid  ${feildName}` },
+            required: { value: true, message: `${feildName} Required `  }
+        })}
+        error={errors[feildName]}
+        sx={{
+          width: width,
+          input: {
+            alignContent: "center",
+            height: "39px",
+            padding: "7px",
+            color: "#808080",
+            fontWeight: "light",
+          },
+        }}
+      ></TextField>
+      {errors[feildName] && (
+        <p style={{ color: "red" }}>{errors[feildName].message}</p>
+      )}
+    </>
   );
 };
 

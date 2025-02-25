@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import Input from "../../../components/input/input";
-import { Box, Button, Typography } from "@mui/material";
-import style from "./signup.module.css";
+import { Box, Button, Typography, TextField } from "@mui/material";
+import style from "./signin.module.css";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { FormControl } from "@mui/material";
@@ -10,17 +10,26 @@ import google from "../../../assets/images/google.png";
 import facebook from "../../../assets/images/facebook.png";
 import apple from "../../../assets/images/apple.png";
 import Image from "next/image";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-const SignUp = () => {
+const SignIn = () => {
+  const formSchema = z.object({
+    Password: z.string().min(1, "Enter valid Password"),
+    Email: z.string().email("Enter valid Email").min(1),
+  });
+
   const {
     control,
+    getValues,
+    setError,
     register,
     handleSubmit,
-    formState: { errors, isSubmitting ,isDirty ,isValid},
+    formState: { errors, isSubmitting, isDirty },
     reset,
   } = useForm({
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      Name: "",
       Email: "",
       Password: "",
     },
@@ -28,26 +37,27 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    console.log(isSubmitting);
     reset();
   };
 
   return (
     <FormControl className={style["form"]}>
       <Box className={style["upper-texts"]}>
-        <Typography sx={{ fontSize: "20px" }}>Welcome to Todo </Typography>
+        <Typography sx={{ fontSize: "20px" }}>Welcome to Todo</Typography>
         <Box className={style["signup-link"]}>
-          <Typography sx={{ fontSize: "13px", color: "#8D8D8D" }}>
-            Have an Account ?
+          <Typography sx={{ fontSize: "16px", color: "#8D8D8D" }}>
+            No Account ?
           </Typography>
           <Link
             style={{
               color: "#B87514",
-              fontSize: "13px",
+              fontSize: "16px",
               textDecoration: "none",
             }}
-            href="/"
+            href="/signup"
           >
-            Sign in
+            Sign up
           </Link>
         </Box>
       </Box>
@@ -57,23 +67,16 @@ const SignUp = () => {
             fontSize: "55px",
             marginLeft: "44px",
             fontWeight: "medium",
-            marginBottom: "10px",
+            marginBottom: "20px",
           }}
         >
-          Sign up
+          Sign in
         </Typography>
       </Box>
       <Box sx={{ width: "90%" }}>
-        <Typography sx={{ fontSize: "16px" }}>Enter your name</Typography>
-        <Input
-          width="100%"
-          lable={"Name"}
-          register={register}
-          errors={errors}
-          pattern={/^[a-zA-Z]+([-'\s][a-zA-Z]+)*$/}
-          feildName="Name"
-        ></Input>
-        <Typography sx={{ fontSize: "16px", marginTop: "10px" }}>
+        <Typography
+          sx={{ fontSize: "16px", marginTop: "10px", marginBottom: "3px" }}
+        >
           Enter your email address
         </Typography>
         <Input
@@ -82,9 +85,10 @@ const SignUp = () => {
           register={register}
           feildName="Email"
           errors={errors}
-          pattern={/^[^\s@]+@[^\s@]+\.[^\s@]+$/}
         ></Input>
-        <Typography sx={{ fontSize: "16px", marginTop: "10px" }}>
+        <Typography
+          sx={{ fontSize: "16px", marginTop: "10px", marginBottom: "3px" }}
+        >
           Enter your password
         </Typography>
         <Input
@@ -93,10 +97,11 @@ const SignUp = () => {
           register={register}
           feildName="Password"
           errors={errors}
-          pattern={/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/}
         ></Input>
       </Box>
+
       <Button
+        type="submit"
         onClick={handleSubmit(onSubmit)}
         sx={{
           color: "#FFFFFF",
@@ -108,14 +113,14 @@ const SignUp = () => {
           marginTop: "20px",
         }}
       >
-        Sign up
+        Sign in
       </Button>
       <Box
         sx={{
           color: "#ABABAB",
           fontSize: "16px",
-          marginTop: "10px",
-          marginBottom: "10px",
+          marginTop: "20px",
+          marginBottom: "20px",
         }}
       >
         OR
@@ -143,4 +148,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

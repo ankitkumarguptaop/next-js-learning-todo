@@ -1,3 +1,11 @@
+.form{
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  height: 75vh;
+  width: 490px;
+  border-radius: 20px;
+}
 
 .upper-texts {
     margin-top: 50px;
@@ -7,7 +15,7 @@
   }
   
   .third-party-signin {
-    width: 400px;
+    width: "90%";
     display: flex;
     justify-content: space-between;
     img {
