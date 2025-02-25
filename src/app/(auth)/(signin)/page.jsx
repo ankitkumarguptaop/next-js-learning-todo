@@ -15,8 +15,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 const SignIn = () => {
   const formSchema = z.object({
-    Password: z.string().min(1, "Enter valid Password"),
-    Email: z.string().email("Enter valid Email").min(1),
+    Password: z.string().min(1, "Enter valid Password").regex(new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/) ,"Enter valid Password"),
+    Email: z.string().email("Enter valid Email").min(1)
   });
 
   const {
